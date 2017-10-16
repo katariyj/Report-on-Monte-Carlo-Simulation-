@@ -1,0 +1,76 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+```{r}
+current_Investment  = 100000
+Average_Return = 0.112
+Standard_deviation = 0.18
+Time_to_retire = 30
+Annual_investment =10000
+
+Retirement_value = NULL
+
+for (k in 0:1000){
+random_returns_for_next_30_years = rnorm(n = Time_to_retire, mean = Average_Return, sd = Standard_deviation)
+random_returns_for_next_30_years
+
+Ending_Value = NULL
+first_ending_value = 0
+for (i in 1:length(random_returns_for_next_30_years)){
+  if(i == 1){
+    first_ending_value = current_Investment*(1+random_returns_for_next_30_years[i])+Annual_investment
+  }
+  if(i != 1){
+    first_ending_value = (first_ending_value*(1+random_returns_for_next_30_years[i]))+Annual_investment
+    Ending_Value[i] = first_ending_value
+  }
+}
+Retirement_value[k] = round(Ending_Value[Time_to_retire])
+}
+
+
+
+Retirement_value = Retirement_value/1000000
+
+median_value = median(Retirement_value)
+median_value/1000000
+mean_value = mean(Retirement_value)
+mean_value/1000000
+
+hist(Retirement_value, xlab = 'In millions of dollars',col = 'olivedrab1', breaks = 50, main = 'Simulated Retirement Value')
+abline(v = median_value, col = 'blue', lwd=4)
+legend(x=20,y=80,legend=c('Median Value', 'Mean value'),fill=c("Blue", 'Red'))
+abline(v = mean_value, col = 'red', lwd=4)
+
+Fixed.rate =(100000*(1+.112)**30)/1000000
+Fixed.rate
+hist(Retirement_value, xlab = 'In millions of dollars',col = 'blue', breaks = 50, main = 'Simulated Retirement Value')
+abline(v = Fixed.rate, col = 'green', lwd=4)
+legend(x=20,y=80,legend=c('Fixed Value', 'Mean value'),fill=c("Green", 'Red'))
+abline(v = mean_value, col = 'red', lwd=4)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
